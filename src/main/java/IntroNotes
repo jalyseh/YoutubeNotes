@@ -1,0 +1,125 @@
+
+Microservices: Integrating Data
+- each ms has an endpoint + some down stream dependencies
+
+JavaDoc
+
+* API documentation
+    - put above class or method
+    - html
+    - phrases
+    - 80 character max length
+    - third person tone
+
+    Tags
+    - @author, @version, @param, @depricated, @see,
+        @return (methods only)
+        -the newly crated speciman object
+
+DEBUGGING
+-F7: im on a method call & want to see what that method does
+-F8: i dont care about the method call, i just want it to execute
+    or there is no method call but excute this line + move to next
+-F9: im finished debugging, continue the program
+
+* can change values while program is running (What if analysis)
+* can enable/disable breakpoint
+* suspend -> condition
+
+UNIT TESTING
+*code review
+*quality
+*regression
+
+* TDD - write test first
+
+Water Fall Approach:
+
+Analysis
+Design
+Implement
+Test
+ROLLOUT(this fixed date would affect testing)
+Support
+
+* BDD - start with requirements
+
+Tools:
+-Junit
+-Mocks
+
+INTEGRATIONS
+* Cucumber
+- human readable GWT to method mapping
+- work into build pipeline
+
+*CI/CD
+- Code Coverage
+- Run Tests Automatically
+
+Testing Triangle
+ UI -> Integration -> Unit
+
+ UI: i reach an endpoint/use this button & get expected response (brittle)
+ Integration: given an input, i get this output
+ Unit: looking at one class, methods in that class (mocks are used)
+
+ Mocking
+ - define an object with the mock() method
+    example:
+        car = mock(Car.class)
+        when (car.canBeStimulated()).thenReturn(false);
+        verify()
+
+
+BEHAVIOR DRIVEN DESIGN
+- extension of TTD
+- everybody has input into the test
+- "As a [] I want [] so that I can []"
+- create unit tests that match Given When Then
+
+Given: Specimen data are available, and specimen 83 is Eastern Redbud
+When: The user/service searches fpr the specimen with ID "83"
+Then: My Plant Diary will return exactly one specimen record for "Eastern Redbud"
+
+***EXAMPLE***
+@Autowired
+ISpecimenService specimenService;
+private Specimen specimen;
+
+@Test
+void fetchSpecimenByID_returnRedBudForID83(){
+
+givenSpecimenDataAreAvailable();
+whenSearchSpecimenWithID83();
+thenReturnOneEasternRedbudSpecimenForID83();
+}
+
+private void whenSearchSpecimenWithID83(){
+specimen = specimenService.fetchById(83);
+}
+
+private void thenReturnOneEasternRedbudSpecimenForID83(){
+ String description = specimen.getDescription();
+ assertEquals("Eastern Redbud", description);
+}
+
+Mockito.when(specimenDAO.save(specimen)).thenReturn(specimen);
+
+CI/CD with Circle Ci
+config.yml
+
+CI: Continuous Integration: multiple integrations per day
+CD: Continuous Delivery: everything automatic, and manual deploy to production
+CD: Continuous Deployment: everything automatic, including deploy to prod.
+Continuous Quality
+
+6 Principles of CD
+Simplicity
+Manifesto for Agile Software Dev
+Design Thinking
+Iterative + Incremental Dev (small steps & verify that it works)
+Lean Management(get info quickly, no need for micromanagement)
+Estimation Accuracy
+
+
